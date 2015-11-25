@@ -36,3 +36,20 @@ end
     end
   end
 end
+
+feature "User permissions" do
+  context "user signed in and viewing restaurants" do
+    it "can only edit restaurants which it has created" do
+      user1_sign_up_and_sign_in
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
+      click_link('Sign out')
+      user2_sign_up_and_sign_in
+      click_link("Edit KFC")
+      fill_in 'Name', with: 'Kentucy Fried Chicken'
+      click_button('Update Restaurant')
+      expect(page).to have_content("Cannot edit this restaurant")
+    end
+  end
+end

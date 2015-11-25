@@ -16,6 +16,7 @@ feature 'reviewing' do
 
   context 'deleting restaurants and their reviews' do
     before do
+      user1_sign_up_and_sign_in
       visit '/restaurants'
       click_link 'Review KFC'
       fill_in "Thoughts", with: "so so"
