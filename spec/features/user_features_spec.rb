@@ -51,5 +51,16 @@ feature "User permissions" do
       click_button('Update Restaurant')
       expect(page).to have_content("Cannot edit this restaurant")
     end
+
+    it "can only delete restaurants which it has created" do
+      user1_sign_up_and_sign_in
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
+      click_link('Sign out')
+      user2_sign_up_and_sign_in
+      click_link("Delete KFC")
+      expect(page).to have_content("Cannot delete this restaurant")
+    end
   end
 end
